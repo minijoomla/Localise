@@ -1,86 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-  <fieldset
-    name="default"
-    label="COM_LOCALISE_FIELDSET_LANGUAGE_LANGUAGE"
-    description="COM_LOCALISE_FIELDSET_LANGUAGE_LANGUAGE_DESC">
-    <!--
-    <field
-      id="pdffontname"
-      name="pdffontname"
-      type="text"
-      size="40"
-      class="inputbox"
-      default=""
-      label="COM_LOCALISE_LABEL_LANGUAGE_PDFFONTNAME"
-      description="COM_LOCALISE_LABEL_LANGUAGE_PDFFONTNAME_DESC" />
--->
-  </fieldset>
-  <fieldset
-    name="author"
-    label="COM_LOCALISE_FIELDSET_LANGUAGE_AUTHOR"
-    description="COM_LOCALISE_FIELDSET_LANGUAGE_AUTHOR_DESC">
-    <field
-      name="author"
-      type="text"
-      size="40"
-      class="inputbox"
-      label="COM_LOCALISE_LABEL_LANGUAGE_AUTHOR"
-      description="COM_LOCALISE_LABEL_LANGUAGE_AUTHOR_DESC" />
-    <field
-      name="authorEmail"
-      type="email"
-      size="40"
-      filter="email"
-      class="inputbox"
-      label="COM_LOCALISE_LABEL_LANGUAGE_EMAIL"
-      description="COM_LOCALISE_LABEL_LANGUAGE_EMAIL_DESC" />
-    <field
-      name="authorUrl"
-      type="url"
-      size="40"
-      class="inputbox"
-      filter="url"
-      label="COM_LOCALISE_LABEL_LANGUAGE_URL"
-      description="COM_LOCALISE_LABEL_LANGUAGE_URL_DESC" />
-    <field
-      name="version"
-      type="text"
-      size="40"
-      class="inputbox"
-      default=""
-      label="COM_LOCALISE_LABEL_LANGUAGE_VERSION"
-      description="COM_LOCALISE_LABEL_LANGUAGE_VERSION_DESC" />
-    <field
-      name="creationDate"
-      type="calendar"
-      size="40"
-      class="inputbox"
-      default="now"
-      label="COM_LOCALISE_LABEL_LANGUAGE_CREATIONDATE"
-      description="COM_LOCALISE_LABEL_LANGUAGE_CREATIONDATE_DESC" />
-    <field
-      name="joomlacopyright"
-      readonly="true"
-      type="text"
-      size="50"
-      label="COM_LOCALISE_LABEL_LANGUAGE_JOOMLACOPYRIGHT"
-      description="COM_LOCALISE_LABEL_LANGUAGE_JOOMLACOPYRIGHT_DESC" />
-    <field
-      name="copyright"
-      type="textarea"
-      cols="50"
-      class="inputbox"
-      label="COM_LOCALISE_LABEL_LANGUAGE_AUTHORCOPYRIGHT"
-      description="COM_LOCALISE_LABEL_LANGUAGE_AUTHORCOPYRIGHT_DESC" />
-    <field
-      name="license"
-      readonly="true"
-      type="text"
-      size="50"
-      class="inputbox"
-      default="http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL"
-      label="COM_LOCALISE_LABEL_LANGUAGE_LICENSE"
-      description="COM_LOCALISE_LABEL_LANGUAGE_LICENSE_DESC" />
-  </fieldset>
+	<fieldset
+		name="author"
+		label="COM_LOCALISE_FIELDSET_LANGUAGE_AUTHOR"
+		description="COM_LOCALISE_FIELDSET_LANGUAGE_AUTHOR_DESC">
+		<field
+			name="author"
+			type="text"
+			label="COM_LOCALISE_LABEL_LANGUAGE_AUTHOR"
+			description="COM_LOCALISE_LABEL_LANGUAGE_AUTHOR_DESC" />
+		<field
+			name="authorEmail"
+			type="email"
+			validate="email"
+			class="validate-email"
+			label="COM_LOCALISE_LABEL_LANGUAGE_EMAIL"
+			description="COM_LOCALISE_LABEL_LANGUAGE_EMAIL_DESC" />
+		<field
+			name="authorUrl"
+			type="url"
+			validate="url"
+			scheme="http,https"
+			class="validate-url"
+			label="COM_LOCALISE_LABEL_LANGUAGE_URL"
+			description="COM_LOCALISE_LABEL_LANGUAGE_URL_DESC" />
+		<field
+			name="version"
+			type="text"
+			label="COM_LOCALISE_LABEL_LANGUAGE_VERSION"
+			description="COM_LOCALISE_LABEL_LANGUAGE_VERSION_DESC" />
+		<field
+			name="creationDate"
+			type="calendar"
+			default="now"
+			label="COM_LOCALISE_LABEL_LANGUAGE_CREATIONDATE"
+			description="COM_LOCALISE_LABEL_LANGUAGE_CREATIONDATE_DESC" />
+		<field
+			name="joomlacopyright"
+			readonly="true"
+			type="text"
+			size="50"
+			label="COM_LOCALISE_LABEL_LANGUAGE_JOOMLACOPYRIGHT"
+			description="COM_LOCALISE_LABEL_LANGUAGE_JOOMLACOPYRIGHT_DESC" />
+		<field
+			name="copyright"
+			type="textarea"
+			label="COM_LOCALISE_LABEL_LANGUAGE_AUTHORCOPYRIGHT"
+			description="COM_LOCALISE_LABEL_LANGUAGE_AUTHORCOPYRIGHT_DESC" />
+		<field
+			name="license"
+			readonly="true"
+			type="text"
+			default="http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL"
+			label="COM_LOCALISE_LABEL_LANGUAGE_LICENSE"
+			description="COM_LOCALISE_LABEL_LANGUAGE_LICENSE_DESC" />
+	</fieldset>
 </form>

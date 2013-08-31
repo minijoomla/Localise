@@ -56,10 +56,13 @@ abstract class LocaliseHelper
       return is_writable($path) || JPath::isOwner($path) || JPath::canChmod($path);
     }
   }
-  static public function hasInstallation() 
-  {
-    return JFolder::exists(LOCALISEPATH_INSTALLATION);
-  }
+
+	// Check that instalation path exists or not
+	static public function hasInstallation() 
+	{
+		return JFolder::exists(LOCALISEPATH_INSTALLATION);
+	}
+
   static public function getPackages() 
   {
     if (empty(self::$package)) 
