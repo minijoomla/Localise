@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<fieldset name="global"
+	<fieldset
+		name="global"
 		addfieldpath="/administrator/components/com_localise/models/fields"
 		label="COM_LOCALISE_CONFIG_GLOBAL_LABEL"
 		description="COM_LOCALISE_CONFIG_GLOBAL_DESC">
@@ -36,26 +37,7 @@
 			size="80"
 			default="a^=â;e^=ê;i^=î;o^=ô;w^=ŵ;y^=ŷ;O^=Ô;i&quot;=ï"
 			label="COM_LOCALISE_AUTOCORRECT"
-			description="COM_LOCALISE_AUTOCORRECT_DESC" />
-		<field
-			name="reftag_site"
-			type="language"
-			client="site"
-			label="COM_LOCALISE_REF_SITE_LANGUAGE"
-			description="COM_LOCALISE_REF_SITE_LANGUAGE">
-		</field>
-		<field
-			name="reftag_administrator"
-			type="language"
-			client="administrator"
-			label="COM_LOCALISE_REF_ADMINISTRATOR_LANGUAGE"
-			description="COM_LOCALISE_REF_ADMINISTRATOR_LANGUAGE" />
-		<field
-			name="reftag_installation"
-			type="language"
-			client="installation"
-			label="COM_LOCALISE_REF_INSTALLATION_LANGUAGE"
-			description="COM_LOCALISE_REF_INSTALLATION_LANGUAGE" />-->
+			description="COM_LOCALISE_AUTOCORRECT_DESC" />-->
 		<field
 			name="reference"
 			type="referencelanguage"
@@ -66,6 +48,7 @@
 			type="text"
 			size="4"
 			maxlength="4"
+			class="ltr"
 			default="0444"
 			label="COM_LOCALISE_LABEL_SAVE_PERMISSION"
 			description="COM_LOCALISE_LABEL_SAVE_PERMISSION_DESC" />
@@ -76,21 +59,24 @@
 			description="COM_LOCALISE_LABEL_INSTALLATION_FOLDER_DESC"
 			hide_default="1"
 			default="installation"
-			exclude="administrator|component|cache|images|includes|language|libraries|logs|media|modules|plugins|templates|test|tmp" />
+			exclude="administrator|component|cache|images|includes|language|libraries|logs|media|modules|plugins|templates|test|tmp|bin|cli|layouts" />
 		<field
 			name="suffixes"
-			type="textarea" cols="50"
+			type="textarea"
+			class="ltr"
 			default=".sys,.menu"
 			label="COM_LOCALISE_LABEL_SUFFIXES"
 			description="COM_LOCALISE_LABEL_SUFFIXES_DESC" />
 		<field
 			name="clientID"
-			type="text" size="70"
+			type="text"
+			class="ltr"
 			label="COM_LOCALISE_LABEL_BING_CLIENTID"
 			description="COM_LOCALISE_LABEL_BING_CLIENTID_DESC" />
 		<field
 			name="client_secret"
-			type="text" size="70"
+			type="text"
+			class="ltr"
 			label="COM_LOCALISE_LABEL_BING_CLIENTSECRET"
 			description="COM_LOCALISE_LABEL_BING_CLIENTSECRET_DESC" />
 		<field
@@ -102,7 +88,7 @@
 			name="authorEmail"
 			type="email"
 			validate="email"
-			class="validate-email"
+			class="validate-email ltr"
 			label="COM_LOCALISE_LABEL_LANGUAGE_EMAIL"
 			description="COM_LOCALISE_LABEL_LANGUAGE_EMAIL_DESC" />
 		<field
@@ -110,7 +96,7 @@
 			type="url"
 			validate="url"
 			scheme="http,https"
-			class="validate-url"
+			class="validate-url ltr"
 			label="COM_LOCALISE_LABEL_LANGUAGE_URL"
 			description="COM_LOCALISE_LABEL_LANGUAGE_URL_DESC" />
 		<field
@@ -121,6 +107,7 @@
 		<field
 			name="license"
 			type="text"
+			class="ltr"
 			label="COM_LOCALISE_LABEL_LICENSE"
 			description="COM_LOCALISE_LABEL_LICENSE_DESC" />
 	</fieldset>
@@ -132,7 +119,6 @@
 			name="rules"
 			type="rules"
 			label="JConfig_Permissions_Label"
-			class="inputbox"
 			filter="rules"
 			component="com_localise"
 			section="component" />
