@@ -1,17 +1,14 @@
 <?php
-/*------------------------------------------------------------------------
-# com_localise - Localise
-# ------------------------------------------------------------------------
-# author    Mohammad Hasani Eghtedar <m.h.eghtedar@gmail.com>
-# copyright Copyright (C) 2012 http://joomlacode.org/gf/project/com_localise/. All Rights Reserved.
-# @license - http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
-# Websites: http://joomlacode.org/gf/project/com_localise/
-# Technical Support:  Forum - http://joomlacode.org/gf/project/com_localise/forum/
--------------------------------------------------------------------------*/
-// no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+/**
+ * @package     Joomla.Administrator
+ * @subpackage  com_localise
+ *
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-jimport('joomla.application.component.modelform');
+defined('_JEXEC') or die;
+
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.stream');
@@ -21,9 +18,8 @@ jimport('joomla.access.rules' );
 /**
  * Translation Model class for the Localise component
  *
- * @package    Extensions.Components
+ * @package     Extensions.Components
  * @subpackage  Localise
- * @since    1.6
  */
 class LocaliseModelTranslation extends JModelForm
 {

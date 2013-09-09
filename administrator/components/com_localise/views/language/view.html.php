@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * View to edit a language.
+ * Language View class for the Localise component
  *
  * @package     Joomla.Administrator
  * @subpackage  com_localise

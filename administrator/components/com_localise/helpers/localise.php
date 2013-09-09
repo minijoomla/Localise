@@ -35,11 +35,11 @@ abstract class LocaliseHelper
       'index.php?option=com_localise&view=translations',
       $vName == 'translations'
     );
- /* JHtmlSidebar::addEntry(
+    JHtmlSidebar::addEntry(
       JText::_('COM_LOCALISE_SUBMENU_PACKAGES'),
       'index.php?option=com_localise&view=packages',
       $vName == 'packages'
-    ); */
+    );
   }
   static public function isWritable($path) 
   {

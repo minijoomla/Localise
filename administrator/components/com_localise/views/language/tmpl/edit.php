@@ -83,16 +83,16 @@ $ftpSets   = $this->formftp->getFieldsets();
 						<?php endforeach; ?>
 					<?php echo JHtml::_('bootstrap.endTab'); ?>
 					<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'permissions', JText::_($fieldSets['permissions']->label, true)); ?>
-							<?php if (!empty($fieldSets['permissions']->description)):?>
-							<p class="tip"><?php echo JText::_($fieldSets['permissions']->description); ?></p>
-							<?php endif;?>
-							<?php foreach($this->form->getFieldset('permissions') as $field): ?>
-							<div class="control-group form-vertical">
-								<div class="controls">
-									<?php echo $field->input; ?>
-								</div>
+						<?php if (!empty($fieldSets['permissions']->description)):?>
+						<p class="tip"><?php echo JText::_($fieldSets['permissions']->description); ?></p>
+						<?php endif;?>
+						<?php foreach($this->form->getFieldset('permissions') as $field): ?>
+						<div class="control-group form-vertical">
+							<div class="controls">
+								<?php echo $field->input; ?>
 							</div>
-							<?php endforeach; ?>
+						</div>
+						<?php endforeach; ?>
 					<?php echo JHtml::_('bootstrap.endTab'); ?>
 
 					<input type="hidden" name="task" value="" />

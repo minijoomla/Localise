@@ -9,16 +9,16 @@
 
 defined('_JEXEC') or die;
 
-//$listOrder = $this->escape($this->state->get('list.ordering'));
-//$listDirn = $this->escape($this->state->get('list.direction'));
-//$params = (isset($this->state->params)) ? $this->state->params : new JObject;
-//$saveOrder = $listOrder == 'tag';
-//$sortFields = $this->getSortFields();
+$listOrder  = $this->escape($this->state->get('list.ordering'));
+$listDirn   = $this->escape($this->state->get('list.direction'));
+$params     = (isset($this->state->params)) ? $this->state->params : new JObject;
+$saveOrder  = $listOrder == 'tag';
+$sortFields = $this->getSortFields();
 ?>
 <!-- Begin Sidebar -->
 <div id="j-sidebar-container" class="span2">
 	<?php echo $this->sidebar; ?>
-	<div class="sidebar">
+	<div id="sidebar">
 		<div class="sidebar-nav">
 			<hr />
 			<div class="filter-select hidden-phone">

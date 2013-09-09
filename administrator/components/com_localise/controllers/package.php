@@ -1,239 +1,238 @@
 <?php
-/*------------------------------------------------------------------------
-# com_localise - Localise
-# ------------------------------------------------------------------------
-# author    Mohammad Hasani Eghtedar <m.h.eghtedar@gmail.com>
-# copyright Copyright (C) 2012 http://joomlacode.org/gf/project/com_localise/. All Rights Reserved.
-# @license - http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
-# Websites: http://joomlacode.org/gf/project/com_localise/
-# Technical Support:  Forum - http://joomlacode.org/gf/project/com_localise/forum/
--------------------------------------------------------------------------*/
-// no direct access
-defined( '_JEXEC' ) or die( 'Restricted access' );
+/**
+ * @package     Joomla.Administrator
+ * @subpackage  com_localise
+ *
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-jimport('joomla.application.component.controllerform');
+defined('_JEXEC') or die;
 
 /**
  * Package Controller class for the Localise component
  *
- * @package    Extensions.Components
+ * @package     Extensions.Components
  * @subpackage  Localise
  */
 class LocaliseControllerPackage extends JControllerForm
 {
-  protected $_view_items = 'packages';
-  protected $_context = 'com_localise.package';
-  public function __construct($config = array()) 
-  {
-    parent::__construct($config);
+	protected $_context = 'com_localise.package';
 
-    // Initialise variables.
-    $app = JFactory::getApplication();
+	public function __construct($config = array()) 
+	{
+		parent::__construct($config);
 
-    // Get the id
-    $cid = JRequest::getVar('cid', array(), 'default', 'array');
-    $cid = count($cid) ? $cid[0] : '';  //mhehm
-    if (!empty($cid)) 
-    {
-      // From the packages view
-      $path = JPATH_COMPONENT_ADMINISTRATOR . "/packages/$cid.xml"; 
-      $name = $cid;
-      $id = LocaliseHelper::getFileId($path);
-    }
-    else
-    {
-      // From the package view
-      $data = JRequest::getVar('jform', array(), 'default', 'array');
-      $id = $data['id'];
-      $name = $data['name'];
-    }
+		// Initialise variables.
+		$app = JFactory::getApplication();
 
-    // Set the id, and path in the session
-    $app->setUserState('com_localise.edit.package.id', $id);
-    $app->setUserState('com_localise.package.name', $name);
+		// Get the id
+		$cid = JRequest::getVar('cid', array(), 'default', 'array');
+		$cid = count($cid) ? $cid[0] : '';  //mhehm
+		if (!empty($cid)) 
+		{
+			// From the packages view
+			$path = JPATH_COMPONENT_ADMINISTRATOR . "/packages/$cid.xml"; 
+			$name = $cid;
+			$id   = LocaliseHelper::getFileId($path);
+		}
+		else
+		{
+			// From the package view
+			$data = JRequest::getVar('jform', array(), 'default', 'array');
+			$id   = $data['id'];
+			$name = $data['name'];
+		}
 
-    // Set the id and unset the cid
-    if (!empty($id) && JRequest::getVar('task') == 'add') 
-    {
-      JRequest::setVar('task', 'edit');
-    }
-    JRequest::setVar('id', $id);
-    JRequest::setVar('cid', array());
-  }
+		// Set the id, and path in the session
+		$app->setUserState('com_localise.edit.package.id', $id);
+		$app->setUserState('com_localise.package.name', $name);
 
-  /**
-   * Method to check if you can add a new record.
-   *
-   * Extended classes can override this if necessary.
-   *
-   * @param  array  An array of input data.
-   *
-   * @return  boolean
-   */
-  protected function _allowAdd($data = array()) 
-  {
-    return JFactory::getUser()->authorise('localise.create', $this->_option);
-  }
+		// Set the id and unset the cid
+		if (!empty($id) && JRequest::getVar('task') == 'add') 
+		{
+			JRequest::setVar('task', 'edit');
+		}
 
-  /**
-   * Method to check if you can add a new record.
-   *
-   * Extended classes can override this if necessary.
-   *
-   * @param  array  An array of input data.
-   * @param  string  The name of the key for the primary key.
-   *
-   * @return  boolean
-   */
-  protected function _allowEdit($data = array(), $key = 'id') 
-  {
-    return JFactory::getUser()->authorise('localise.edit', $this->_option . '.' . $data[$key]);
-  }
+		JRequest::setVar('id', $id);
+		JRequest::setVar('cid', array());
+	}
 
-  /**
-   * Method to get a model object, loading it if required.
-   *
-   * @param  string  The model name. Optional.
-   * @param  string  The class prefix. Optional.
-   * @param  array  Configuration array for model. Optional.
-   *
-   * @return  object  The model.
-   */
-  public function getModel($name = 'Package', $prefix = 'LocaliseModel', $config = array('ignore_request' => false)) 
-  {
-    return parent::getModel($name, $prefix, $config);
-  }
-  public function download() 
-  {
-    // Redirect to the export view
-    $app = JFactory::getApplication();
-    $name = $app->getUserState('com_localise.package.name');
-    $path = JPATH_COMPONENT_ADMINISTRATOR . "/packages/$name.xml";
-    $id = LocaliseHelper::getFileId($path);
+	/**
+	 * Method to check if you can add a new record.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param  array  An array of input data.
+	 *
+	 * @return  boolean
+	 */
+	protected function _allowAdd($data = array()) 
+	{
+		return JFactory::getUser()->authorise('localise.create', $this->_option);
+	}
 
-    // Check if the package exists
-    if (empty($id)) 
-    {
-      $this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), JText::sprintf('COM_LOCALISE_ERROR_DOWNLOADPACKAGE_UNEXISTING', $name), 'error');
-    }
-    else
-    {
-      $model = $this->getModel();
-      $package = $model->getItem();  
-      if (!$package->standalone) 
-      {
-        $msg = JText::sprintf('COM_LOCALISE_NOTICE_DOWNLOADPACKAGE_NOTSTANDALONE', $name);
-        $type = 'notice';
-      }
-      else
-      { 
-        $msg = '';
-        $type = 'message';
-      }
+	/**
+	 * Method to check if you can add a new record.
+	 *
+	 * Extended classes can override this if necessary.
+	 *
+	 * @param  array  An array of input data.
+	 * @param  string  The name of the key for the primary key.
+	 *
+	 * @return  boolean
+	 */
+	protected function _allowEdit($data = array(), $key = 'id') 
+	{
+		return JFactory::getUser()->authorise('localise.edit', $this->_option . '.' . $data[$key]);
+	}
 
-      setcookie(JApplication::getHash($this->_context . '.author'), $package->author, time()+60*60*24*30);
-      setcookie(JApplication::getHash($this->_context . '.copyright'), $package->copyright, time()+60*60*24*30);
-      setcookie(JApplication::getHash($this->_context . '.email'), $package->email, time()+60*60*24*30);
-      setcookie(JApplication::getHash($this->_context . '.url'), $package->url, time()+60*60*24*30);
-      setcookie(JApplication::getHash($this->_context . '.version'), $package->version, time()+60*60*24*30);
-      setcookie(JApplication::getHash($this->_context . '.license'), $package->license, time()+60*60*24*30);
+	/**
+	 * Method to get a model object, loading it if required.
+	 *
+	 * @param  string  The model name. Optional.
+	 * @param  string  The class prefix. Optional.
+	 * @param  array  Configuration array for model. Optional.
+	 *
+	 * @return  object  The model.
+	 */
+	public function getModel($name = 'Package', $prefix = 'LocaliseModel', $config = array('ignore_request' => false)) 
+	{
+		return parent::getModel($name, $prefix, $config);
+	}
 
-      $this->setRedirect(JRoute::_('index.php?option=com_localise&tmpl=component&view=downloadpackage&name=' . $name . '&standalone=' . $package->standalone, false), $msg, $type);
-    }
-  }
+	public function download() 
+	{
+		// Redirect to the export view
+		$app  = JFactory::getApplication();
+		$name = $app->getUserState('com_localise.package.name');
+		$path = JPATH_COMPONENT_ADMINISTRATOR . "/packages/$name.xml";
+		$id   = LocaliseHelper::getFileId($path);
 
-  /**
-   * Method to create the install file for package
-   */
-  public function export() 
-  {
-    $app = JFactory::getApplication();
+		// Check if the package exists
+		if (empty($id)) 
+		{
+			$this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), JText::sprintf('COM_LOCALISE_ERROR_DOWNLOADPACKAGE_UNEXISTING', $name), 'error');
+		}
+		else
+		{
+			$model   = $this->getModel();
+			$package = $model->getItem();  
+			if (!$package->standalone) 
+			{
+				$msg  = JText::sprintf('COM_LOCALISE_NOTICE_DOWNLOADPACKAGE_NOTSTANDALONE', $name);
+				$type = 'notice';
+			}
+			else
+			{ 
+				$msg  = '';
+				$type = 'message';
+			}
 
-    // $name = $app->getUserState('com_localise.package.name');
-    $data = JRequest::getVar('jform');
-    $name = $data['name'];
-    $path = JPATH_COMPONENT_ADMINISTRATOR . "/packages/$name.xml";
-    $id = LocaliseHelper::getFileId($path);
+			setcookie(JApplication::getHash($this->_context . '.author'), $package->author, time()+60*60*24*30);
+			setcookie(JApplication::getHash($this->_context . '.copyright'), $package->copyright, time()+60*60*24*30);
+			setcookie(JApplication::getHash($this->_context . '.email'), $package->email, time()+60*60*24*30);
+			setcookie(JApplication::getHash($this->_context . '.url'), $package->url, time()+60*60*24*30);
+			setcookie(JApplication::getHash($this->_context . '.version'), $package->version, time()+60*60*24*30);
+			setcookie(JApplication::getHash($this->_context . '.license'), $package->license, time()+60*60*24*30);
 
-    // Check if the package exists
-    if (empty($id)) 
-    {
-      $this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), JText::sprintf('COM_LOCALISE_ERROR_EXPORT_UNEXISTING', $name), 'error');
-      return false;
-    }
+			$this->setRedirect(JRoute::_('index.php?option=com_localise&tmpl=component&view=downloadpackage&name=' . $name . '&standalone=' . $package->standalone, false), $msg, $type);
+		}
+	}
 
-    // Get the package model
-    $model = JModel::getInstance('Package', 'LocaliseModel');
-    $model->setState('package.id', $id);
-    $model->setState('package.name', $packageName);
-    $package = $model->getItem();
+	/**
+	 * Method to create the install file for package
+	 */
+	public function export() 
+	{
+		$app = JFactory::getApplication();
 
-    // Check if the package is correct
-    if (count($package->getErrors())) 
-    {
-      $this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), implode('<br />', $package->getErrors()), 'error');
-      return false;
-    }
+		// $name = $app->getUserState('com_localise.package.name');
+		$data = JRequest::getVar('jform');
+		$name = $data['name'];
+		$path = JPATH_COMPONENT_ADMINISTRATOR . "/packages/$name.xml";
+		$id   = LocaliseHelper::getFileId($path);
 
-    // Check if the package is readonly
-    if ($package->readonly) 
-    {
-      $this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), JText::sprintf('COM_LOCALISE_NOTICE_EXPORT_READONLY', $name), 'notice');
-      return false;
-    }
+		// Check if the package exists
+		if (empty($id)) 
+		{
+			$this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), JText::sprintf('COM_LOCALISE_ERROR_EXPORT_UNEXISTING', $name), 'error');
+			return false;
+		}
 
-    // Redirect to the export view
-    $this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=exportpackage&format=raw&tmpl=component&name=' . $name, false));
-    return;
+		// Get the package model
+		$model = JModel::getInstance('Package', 'LocaliseModel');
+		$model->setState('package.id', $id);
+		$model->setState('package.name', $packageName);
 
-    // return true;
-    // JRequest::setVar('tmpl','component');
+		$package = $model->getItem();
 
-    // Initialise variables.
+		// Check if the package is correct
+		if (count($package->getErrors())) 
+		{
+			$this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), implode('<br />', $package->getErrors()), 'error');
+			return false;
+		}
 
-    // $app = JFactory::getApplication();
+		// Check if the package is readonly
+		if ($package->readonly) 
+		{
+			$this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), JText::sprintf('COM_LOCALISE_NOTICE_EXPORT_READONLY', $name), 'notice');
+			return false;
+		}
 
-    // $model = $this->getModel();
+		// Redirect to the export view
+		$this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=exportpackage&format=raw&tmpl=component&name=' . $name, false));
+		return;
 
-    // $table = $model->getTable();
+		// return true;
+		// JRequest::setVar('tmpl','component');
 
-    // $cid = JRequest::getVar('cid', array(), 'post', 'array');
+		// Initialise variables.
 
-    // $recordId = (int) (count($cid) ? $cid[0] : JRequest::getInt('id'));
+		// $app = JFactory::getApplication();
 
-    // $app->setUserState($context.'.id', $recordId);
+		// $model = $this->getModel();
 
-    // $this->setRedirect('index.php?option='.$this->_option.'&view='.$this->_view_item.$append);
+		// $table = $model->getTable();
 
-    // return true;
+		// $cid = JRequest::getVar('cid', array(), 'post', 'array');
 
-    // Get the document object.
+		// $recordId = (int) (count($cid) ? $cid[0] : JRequest::getInt('id'));
 
-    $document = & JFactory::getDocument();
+		// $app->setUserState($context.'.id', $recordId);
 
-    // $document->setType('raw');
-    $vName = 'export';
-    $vFormat = 'raw';
+		// $this->setRedirect('index.php?option='.$this->_option.'&view='.$this->_view_item.$append);
 
-    // Get and render the view.
-    if ($view = & $this->getView($vName, $vFormat)) 
-    {
-      // Get the model for the view.
-      $model = & $this->getModel($vName);
+		// return true;
 
-      // Load the filter state.
-      $app = & JFactory::getApplication();
+		// Get the document object.
 
-      // $model->setState('basename',$form['basename']);
-      // $model->setState('compressed',$form['compressed']);
+		$document = & JFactory::getDocument();
 
-      // Push the model into the view (as default).
+		// $document->setType('raw');
+		$vName = 'export';
+		$vFormat = 'raw';
 
-      $view->setModel($model, true);
+		// Get and render the view.
+		if ($view = & $this->getView($vName, $vFormat)) 
+		{
+			// Get the model for the view.
+			$model = & $this->getModel($vName);
 
-      // Push document object into the view.
-      $view->assignRef('document', $document);
-      $view->display();
-    }
-  }
+			// Load the filter state.
+			$app = & JFactory::getApplication();
+
+			// $model->setState('basename',$form['basename']);
+			// $model->setState('compressed',$form['compressed']);
+
+			// Push the model into the view (as default).
+
+			$view->setModel($model, true);
+
+			// Push document object into the view.
+			$view->assignRef('document', $document);
+			$view->display();
+		}
+	}
 }

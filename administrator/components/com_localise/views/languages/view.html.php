@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 /**
  * Languages View class for the Localise component
  *
- * @package    Extensions.Components
+ * @package     Extensions.Components
  * @subpackage  Localise
  */
 class LocaliseViewLanguages extends JViewLegacy
@@ -85,7 +85,6 @@ class LocaliseViewLanguages extends JViewLegacy
 
 	protected function prepareDocument() 
 	{
-		$app = JFactory::getApplication('administrator');
 		$document = JFactory::getDocument();
 		$document->setTitle(JText::sprintf('COM_LOCALISE_TITLE', JText::_('COM_LOCALISE_TITLE_LANGUAGES')));
 	}

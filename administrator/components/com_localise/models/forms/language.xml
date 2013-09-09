@@ -32,6 +32,7 @@
 			maxlength="7"
 			size="10"
 			required="true"
+			class="ltr"
 			label="COM_LOCALISE_LABEL_LANGUAGE_TAG"
 			description="COM_LOCALISE_LABEL_LANGUAGE_TAG_DESC" />
 		<field
@@ -100,7 +101,7 @@
 			name="authorEmail"
 			type="email"
 			validate="email"
-			class="validate-email"
+			class="validate-email ltr"
 			label="COM_LOCALISE_LABEL_LANGUAGE_EMAIL"
 			description="COM_LOCALISE_LABEL_LANGUAGE_EMAIL_DESC" />
 		<field
@@ -108,12 +109,13 @@
 			type="text"
 			validate="url"
 			scheme="http,https"
-			class="validate-url"
+			class="validate-url ltr"
 			label="COM_LOCALISE_LABEL_LANGUAGE_URL"
 			description="COM_LOCALISE_LABEL_LANGUAGE_URL_DESC" />
 		<field
 			name="version"
 			type="text"
+			class="ltr"
 			label="COM_LOCALISE_LABEL_LANGUAGE_VERSION"
 			description="COM_LOCALISE_LABEL_LANGUAGE_VERSION_DESC" />
 		<field
@@ -127,6 +129,7 @@
 			readonly="true"
 			type="text"
 			size="50"
+			class="ltr"
 			label="COM_LOCALISE_LABEL_LANGUAGE_JOOMLACOPYRIGHT"
 			description="COM_LOCALISE_LABEL_LANGUAGE_JOOMLACOPYRIGHT_DESC" />
 		<field
@@ -137,6 +140,7 @@
 		<field
 			name="license"
 			type="text"
+			class="ltr"
 			default="http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL"
 			label="COM_LOCALISE_LABEL_LANGUAGE_LICENSE"
 			description="COM_LOCALISE_LABEL_LANGUAGE_LICENSE_DESC" />
