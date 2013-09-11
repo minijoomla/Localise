@@ -202,37 +202,46 @@ abstract class LocaliseHelper
     }
     return $scans;
   }
-  public static function getFileId($path) 
-  {
-    static $fileIds = null;
-    if (!isset($fileIds)) 
-    {
-      $db = JFactory::getDBO();
-      $query = $db->getQuery(true);
-      $query->select('id, path');
-      $query->from($db->quoteName('#__localise'));
-      $db->setQuery($query);
-      $fileIds = $db->loadObjectList('path');
-    }
-    jimport('joomla.filesystem.file');
-    if (JFile::exists($path) || preg_match('/.ini$/', $path)) 
-    {
-      if (!array_key_exists($path, $fileIds)) 
-      {
-        JTable::addIncludePath(JPATH_COMPONENT . '/tables');
-        $table = JTable::getInstance('Localise', 'LocaliseTable');
-        $table->path = $path;
-        $table->store();
-        $fileIds[$path] = new JObject(array('id' => $table->id));
-      }
-      return $fileIds[$path]->id;
-    }
-    else
-    {
-      $id = 0;
-    }
-    return $id;
-  }
+
+	// Get file id in database with file path
+	public static function getFileId($path) 
+	{
+		static $fileIds = null;
+
+		if (!isset($fileIds)) 
+		{
+			$db    = JFactory::getDBO();
+			$query = $db->getQuery(true);
+
+			$query->select('id, path');
+			$query->from($db->quoteName('#__localise'));
+
+			$db->setQuery($query);
+			$fileIds = $db->loadObjectList('path');
+		}
+
+		jimport('joomla.filesystem.file');
+
+		if (JFile::exists($path) || preg_match('/.ini$/', $path)) 
+		{
+			if (!array_key_exists($path, $fileIds)) 
+			{
+				JTable::addIncludePath(JPATH_COMPONENT . '/tables');
+				$table = JTable::getInstance('Localise', 'LocaliseTable');
+				$table->path = $path;
+				$table->store();
+				$fileIds[$path] = new JObject(array('id' => $table->id));
+			}
+
+			return $fileIds[$path]->id;
+		}
+		else
+		{
+			$id = 0;
+		}
+
+		return $id;
+	}
 
   /**
    * Gets a list of the actions that can be performed.

@@ -105,6 +105,11 @@
 			label="COM_LOCALISE_LABEL_COPYRIGHT"
 			description="COM_LOCALISE_LABEL_COPYRIGHT_DESC" />
 		<field
+			name="additionalcopyright"
+			type="textarea"
+			label="COM_LOCALISE_LABEL_ADDITIONAL_COPYRIGHT"
+			description="COM_LOCALISE_LABEL_ADDITIONAL_COPYRIGHT_DESC" />
+		<field
 			name="license"
 			type="text"
 			class="ltr"

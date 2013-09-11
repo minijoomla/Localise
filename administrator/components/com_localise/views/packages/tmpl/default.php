@@ -53,7 +53,7 @@ $sortFields = $this->getSortFields();
 			}
 			if (s!=null)
 			{
-				SqueezeBox.open('index.php?option=com_localise&task=package.download&cid[]='+s, {handler: 'iframe', size: {x: 600, y: 300}});
+				SqueezeBox.open('index.php?option=com_localise&task=package.download&cid[]='+s, {handler: 'iframe', size: {x: 500, y: 500}});
 			}
 		}
 		else

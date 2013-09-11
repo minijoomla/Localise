@@ -22,6 +22,7 @@
 		<field
 			name="version"
 			type="text"
+			class="ltr"
 			label="COM_LOCALISE_LABEL_TRANSLATION_VERSION"
 			description="COM_LOCALISE_LABEL_TRANSLATION_VERSION_DESC" />
 		<field
@@ -51,6 +52,7 @@
 		<field
 			name="license"
 			type="text"
+			class="ltr"
 			default="http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL"
 			label="COM_LOCALISE_LABEL_TRANSLATION_LICENSE"
 			description="COM_LOCALISE_LABEL_TRANSLATION_LICENSE_DESC" />

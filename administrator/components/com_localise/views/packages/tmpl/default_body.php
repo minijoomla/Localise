@@ -25,14 +25,14 @@ $canAdmin = $user->authorise('core.admin', 'com_localise');
 	</td>
 	<td>
 		<?php LocaliseHelper::loadLanguage($item->manifest, $item->client);?>
-		<span title="<?php echo JText::_($item->title);?>::<?php echo JText::_($item->description);?>" class="hasTooltip localise-icon " style="background-image:url(<?php echo JURI::root(true).$item->icon;?>);"></span>
+		<span title="<?php echo JText::_($item->title);?>::<?php echo JText::_($item->description);?>" class="hasTooltip localise-icon " style="background-image:url(<?php echo JURI::root(true) . '/' . $item->icon;?>);"></span>
 		<?php if (!$canAdmin): ?>
 		<span title="<?php echo JText::_('COM_LOCALISE_TOOLTIP_PACKAGES_READONLY'); ?>"  class="hasTooltip localise-icon icon-16-warning">
 			<?php echo JText::sprintf('COM_LOCALISE_TEXT_PACKAGES_TITLE',JText::_($item->title),$item->name); ?>
 		</span>
 		<?php elseif ($item->writable && $canEdit): ?>
-		<span title="" class="localise-icon">
-			<a href="<?php echo JRoute::_('index.php?option=com_localise&task=package.edit&cid[]=' . $item->name); ?>" title="<?php echo JText::_('COM_LOCALISE_TOOLTIP_PACKAGES_EDIT'); ?>">
+		<span class="localise-icon">
+			<a class="hasTooltip" href="<?php echo JRoute::_('index.php?option=com_localise&task=package.edit&cid[]=' . $item->name); ?>" title="<?php echo JText::_('COM_LOCALISE_TOOLTIP_PACKAGES_EDIT'); ?>">
 				<?php echo JText::sprintf('COM_LOCALISE_TEXT_PACKAGES_TITLE',JText::_($item->title),$item->name); ?>
 			</a>
 		</span>

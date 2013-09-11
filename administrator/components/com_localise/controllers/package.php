@@ -28,7 +28,7 @@ class LocaliseControllerPackage extends JControllerForm
 
 		// Get the id
 		$cid = JRequest::getVar('cid', array(), 'default', 'array');
-		$cid = count($cid) ? $cid[0] : '';  //mhehm
+		$cid = count($cid) ? $cid[0] : '';
 		if (!empty($cid)) 
 		{
 			// From the packages view
@@ -118,6 +118,7 @@ class LocaliseControllerPackage extends JControllerForm
 		{
 			$model   = $this->getModel();
 			$package = $model->getItem();  
+
 			if (!$package->standalone) 
 			{
 				$msg  = JText::sprintf('COM_LOCALISE_NOTICE_DOWNLOADPACKAGE_NOTSTANDALONE', $name);
@@ -129,110 +130,14 @@ class LocaliseControllerPackage extends JControllerForm
 				$type = 'message';
 			}
 
-			setcookie(JApplication::getHash($this->_context . '.author'), $package->author, time()+60*60*24*30);
+			setcookie(JApplication::getHash($this->_context . '.author'   ), $package->author   , time()+60*60*24*30);
 			setcookie(JApplication::getHash($this->_context . '.copyright'), $package->copyright, time()+60*60*24*30);
-			setcookie(JApplication::getHash($this->_context . '.email'), $package->email, time()+60*60*24*30);
-			setcookie(JApplication::getHash($this->_context . '.url'), $package->url, time()+60*60*24*30);
-			setcookie(JApplication::getHash($this->_context . '.version'), $package->version, time()+60*60*24*30);
-			setcookie(JApplication::getHash($this->_context . '.license'), $package->license, time()+60*60*24*30);
+			setcookie(JApplication::getHash($this->_context . '.email'    ), $package->email    , time()+60*60*24*30);
+			setcookie(JApplication::getHash($this->_context . '.url'      ), $package->url      , time()+60*60*24*30);
+			setcookie(JApplication::getHash($this->_context . '.version'  ), $package->version  , time()+60*60*24*30);
+			setcookie(JApplication::getHash($this->_context . '.license'  ), $package->license  , time()+60*60*24*30);
 
 			$this->setRedirect(JRoute::_('index.php?option=com_localise&tmpl=component&view=downloadpackage&name=' . $name . '&standalone=' . $package->standalone, false), $msg, $type);
-		}
-	}
-
-	/**
-	 * Method to create the install file for package
-	 */
-	public function export() 
-	{
-		$app = JFactory::getApplication();
-
-		// $name = $app->getUserState('com_localise.package.name');
-		$data = JRequest::getVar('jform');
-		$name = $data['name'];
-		$path = JPATH_COMPONENT_ADMINISTRATOR . "/packages/$name.xml";
-		$id   = LocaliseHelper::getFileId($path);
-
-		// Check if the package exists
-		if (empty($id)) 
-		{
-			$this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), JText::sprintf('COM_LOCALISE_ERROR_EXPORT_UNEXISTING', $name), 'error');
-			return false;
-		}
-
-		// Get the package model
-		$model = JModel::getInstance('Package', 'LocaliseModel');
-		$model->setState('package.id', $id);
-		$model->setState('package.name', $packageName);
-
-		$package = $model->getItem();
-
-		// Check if the package is correct
-		if (count($package->getErrors())) 
-		{
-			$this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), implode('<br />', $package->getErrors()), 'error');
-			return false;
-		}
-
-		// Check if the package is readonly
-		if ($package->readonly) 
-		{
-			$this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=packages', false), JText::sprintf('COM_LOCALISE_NOTICE_EXPORT_READONLY', $name), 'notice');
-			return false;
-		}
-
-		// Redirect to the export view
-		$this->setRedirect(JRoute::_('index.php?option=' . $this->_option . '&view=exportpackage&format=raw&tmpl=component&name=' . $name, false));
-		return;
-
-		// return true;
-		// JRequest::setVar('tmpl','component');
-
-		// Initialise variables.
-
-		// $app = JFactory::getApplication();
-
-		// $model = $this->getModel();
-
-		// $table = $model->getTable();
-
-		// $cid = JRequest::getVar('cid', array(), 'post', 'array');
-
-		// $recordId = (int) (count($cid) ? $cid[0] : JRequest::getInt('id'));
-
-		// $app->setUserState($context.'.id', $recordId);
-
-		// $this->setRedirect('index.php?option='.$this->_option.'&view='.$this->_view_item.$append);
-
-		// return true;
-
-		// Get the document object.
-
-		$document = & JFactory::getDocument();
-
-		// $document->setType('raw');
-		$vName = 'export';
-		$vFormat = 'raw';
-
-		// Get and render the view.
-		if ($view = & $this->getView($vName, $vFormat)) 
-		{
-			// Get the model for the view.
-			$model = & $this->getModel($vName);
-
-			// Load the filter state.
-			$app = & JFactory::getApplication();
-
-			// $model->setState('basename',$form['basename']);
-			// $model->setState('compressed',$form['compressed']);
-
-			// Push the model into the view (as default).
-
-			$view->setModel($model, true);
-
-			// Push document object into the view.
-			$view->assignRef('document', $document);
-			$view->display();
 		}
 	}
 }
