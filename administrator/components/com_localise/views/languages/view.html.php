@@ -10,17 +10,20 @@
 defined('_JEXEC') or die;
 
 /**
- * Languages View class for the Localise component
+ * HTML Languages View class for the Localise component
  *
- * @package     Extensions.Components
- * @subpackage  Localise
+ * @package     Joomla.Administrator
+ * @subpackage  com_localise
  */
 class LocaliseViewLanguages extends JViewLegacy
 {
 	protected $items;
+
 	protected $pagination;
-	protected $form;
+
 	protected $state;
+
+	protected $form;
 
 	/**
 	 * Display the view
@@ -48,9 +51,6 @@ class LocaliseViewLanguages extends JViewLegacy
 		$this->addToolbar();
 		$this->sidebar = JHtmlSidebar::render();
 
-		// Prepare the document
-		$this->prepareDocument();
-
 		// Display the view
 		parent::display($tpl);
 	}
@@ -64,7 +64,7 @@ class LocaliseViewLanguages extends JViewLegacy
 	{
 		$canDo = LocaliseHelper::getActions();
 
-		JToolbarHelper::title(JText::sprintf('COM_LOCALISE_HEADER_MANAGER', JText::_('COM_LOCALISE_HEADER_LANGUAGES')), 'langmanager.png');
+		JToolbarHelper::title(JText::sprintf('COM_LOCALISE_HEADER_MANAGER', JText::_('COM_LOCALISE_HEADER_LANGUAGES')), 'comments-2 langmanager');
 
 		if ($canDo->get('localise.create')) 
 		{
@@ -80,13 +80,7 @@ class LocaliseViewLanguages extends JViewLegacy
 
 		JToolBarHelper::help('screen.languages', true);
 
-		JSubMenuHelper::setAction('index.php?option=com_localise&view=languages');
-	}
-
-	protected function prepareDocument() 
-	{
-		$document = JFactory::getDocument();
-		$document->setTitle(JText::sprintf('COM_LOCALISE_TITLE', JText::_('COM_LOCALISE_TITLE_LANGUAGES')));
+		JHtmlSidebar::setAction('index.php?option=com_localise&view=languages');
 	}
 
 	/**

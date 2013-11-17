@@ -25,6 +25,7 @@ class LocaliseModelTranslation extends JModelForm
 {
 	protected $item;
 	protected $contents;
+
 	protected function populateState()
 	{
 		// Get the infos
@@ -355,7 +356,9 @@ class LocaliseModelTranslation extends JModelForm
 						}
 					}
 
-					$this->item->complete = $this->item->total ? intval(100 * $this->item->translated / $this->item->total) + $this->item->unchanged / $this->item->total : 100;
+					$this->item->completed = $this->item->total ? intval(100 * $this->item->translated / $this->item->total) + $this->item->unchanged / $this->item->total : 100;
+
+					$this->item->complete = $this->item->complete ? 1 : ($this->item->completed == 100 ? 1 : 0);
 				}
 
 				if ($this->getState('translation.id'))
@@ -396,7 +399,32 @@ class LocaliseModelTranslation extends JModelForm
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
-		return $this->loadForm('com_localise.translation', 'translation', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_localise.translation', 'translation', array('control' => 'jform', 'load_data' => $loadData));
+
+		$params = JComponentHelper::getParams('com_localise');
+
+		// Set fields readonly if localise global params exist
+		if ($params->get('author'))
+		{
+			$form->setFieldAttribute('author', 'readonly', 'true');
+		}
+
+		if ($params->get('copyright'))
+		{
+			$form->setFieldAttribute('maincopyright', 'readonly', 'true');
+		}
+
+		if ($params->get('additionalcopyright'))
+		{
+			$form->setFieldAttribute('additionalcopyright', 'readonly', 'true');
+		}
+
+		if ($params->get('license'))
+		{
+			$form->setFieldAttribute('license', 'readonly', 'true');
+		}
+		
+		return $form;
 	}
 
 	/**
@@ -741,7 +769,7 @@ class LocaliseModelTranslation extends JModelForm
 				$contents2.= "; @license     " . $data['license'] . "\n";
 			}
 
-			if (array_key_exists('complete', $data) && $data['complete'] == '1')
+			if (array_key_exists('complete', $data) && ($data['complete'] == '1'))
 			{
 				$contents2.= "; @note        Complete\n";
 			}

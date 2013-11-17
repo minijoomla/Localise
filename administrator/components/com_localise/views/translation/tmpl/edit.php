@@ -70,7 +70,7 @@ JText::script('COM_LOCALISE_BINGTRANSLATING_NOW');
 
 	function returnAll()
 	{
-		$$('img.return').each(function(e){
+		$$('i.return').each(function(e){
 			if(e.click)
 				e.click();
 			else
@@ -86,7 +86,7 @@ JText::script('COM_LOCALISE_BINGTRANSLATING_NOW');
 		}
 
 		bingTranslateComplete = true;
-		var targets = $$('img.translate');
+		var targets = $$('i.translate');
 		AzureTranslator(targets[0], targets, 0, '<?php echo JSession::getFormToken();?>');
 	}
 
@@ -132,7 +132,7 @@ JText::script('COM_LOCALISE_BINGTRANSLATING_NOW');
 					<?php endif; ?>
 					<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'default', JText::_($fieldSets['default']->label, true)); ?>
 						<?php if (!empty($fieldSets['default']->description)):?>
-						<p class="tip"><?php echo JText::_($fieldSets['default']->description); ?></p>
+						<p class="alert alert-info"><?php echo JText::_($fieldSets['default']->description); ?></p>
 						<?php endif;?>
 						<?php foreach($this->form->getFieldset('default') as $field): ?>
 						<div class="control-group">

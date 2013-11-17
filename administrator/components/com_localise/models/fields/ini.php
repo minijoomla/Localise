@@ -36,11 +36,11 @@ class JFormFieldIni extends JFormField
    */
   protected function getInput() 
   {
-    $rows = (string)$this->element['rows'];
-    $cols = (string)$this->element['cols'];
-    $height = ((string)$this->element['height']) ? (string)$this->element['height'] : '250';
-    $width = ((string)$this->element['width']) ? (string)$this->element['width'] : '97%';
-    $class = ((string)$this->element['class'] ? 'class="' . $this->element['class'] . '"' : 'class="text_area"');
+    $rows   = (string) $this->element['rows'];
+    $cols   = (string) $this->element['cols'];
+    $height = (string) $this->element['height'] ? (string) $this->element['height'] : '250';
+    $width  = (string) $this->element['width']  ? (string) $this->element['width']  : '97%';
+    $class  = (string) $this->class ? ' class="' . (string) $this->class . '"' : ' class="text_area"';
 
     // Only add "px" to width and height if they are not given as a percentage
     if (is_numeric($width)) 
@@ -58,7 +58,7 @@ class JFormFieldIni extends JFormField
     $compressed = JFactory::getApplication()->getCfg('debug') ? '-uncompressed' : '';
     $options->basefiles = array('basefiles' . $compressed . '.js');
     $options->path = JURI::root(true) . '/media/editors/codemirror/js/';
-    $options->parserfile = '../../../com_localise/js/parseini.js';
+    $options->parserfile = JURI::root(true) . '/media/com_localise/js/parseini.js';//'../../../com_localise/js/parseini.js';
     $options->stylesheet = JURI::root(true) . '/media/com_localise/css/localise.css';
     $options->height = $height;
     $options->width = $width;
@@ -67,10 +67,10 @@ class JFormFieldIni extends JFormField
     $options->textWrapping = true;
     $options->tabMode = 'default';
     $html = array();
-    $html[] = '<textarea name="' . $this->name . '" id="' . $this->id . '" cols="' . $cols . '" rows="' . $rows . '">' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '</textarea>';
+    $html[] = '<textarea' . $class . ' name="' . $this->name . '" id="' . $this->id . '" cols="' . $cols . '" rows="' . $rows . '">' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '</textarea>';
     $html[] = '<script type="text/javascript">';
     $html[] = '(function() {';
-    $html[] = 'var editor = CodeMirror.fromTextArea("' . $this->id . '", ' . json_encode($options) . ');';
+    $html[] = 'var editor = CodeMirror.fromTextArea(document.getElementById("' . $this->id . '"), ' . json_encode($options) . ');';
     $html[] = 'Joomla.editors.instances[\'' . $this->id . '\'] = editor;';
     $html[] = '})()';
     $html[] = '</script>';
@@ -84,6 +84,6 @@ class JFormFieldIni extends JFormField
    */
   public function save() 
   {
-    return "document.getElementById('" . $this->id . "').value = Joomla.editors.instances['" . $this->id . "'].getCode();\n";
+    return "document.getElementById('" . $this->id . "').value = Joomla.editors.instances['" . $this->id . "'].getValue();\n";
   }
 }

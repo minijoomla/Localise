@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Language View class for the Localise component
+ * View to edit a laguage.
  *
  * @package     Joomla.Administrator
  * @subpackage  com_localise
@@ -18,7 +18,9 @@ defined('_JEXEC') or die;
 class LocaliseViewLanguage extends JViewLegacy
 {
 	protected $state;
+
 	protected $item;
+
 	protected $form;
 
 	/**
@@ -45,9 +47,6 @@ class LocaliseViewLanguage extends JViewLegacy
 		// Set the toolbar
 		$this->addToolbar();
 
-		// Prepare the document
-    	$this->prepareDocument();
-
 		// Display the view
 		parent::display($tpl);
 	}
@@ -60,7 +59,7 @@ class LocaliseViewLanguage extends JViewLegacy
 		$isNew      = empty($this->item->id);
 		$checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
 
-		JToolbarHelper::title(JText::sprintf('COM_LOCALISE_HEADER_MANAGER', $isNew ? JText::_('COM_LOCALISE_HEADER_LANGUAGE_NEW') : JText::_('COM_LOCALISE_HEADER_LANGUAGE_EDIT')), 'langmanager.png');
+		JToolbarHelper::title(JText::sprintf('COM_LOCALISE_HEADER_MANAGER', $isNew ? JText::_('COM_LOCALISE_HEADER_LANGUAGE_NEW') : JText::_('COM_LOCALISE_HEADER_LANGUAGE_EDIT')), 'icon-comments-2 langmanager');
 
 		// If not checked out, can save the item.
 		if (!$checkedOut) 
@@ -72,11 +71,5 @@ class LocaliseViewLanguage extends JViewLegacy
 		JToolBarHelper::cancel('language.cancel', $isNew ? 'JTOOLBAR_CANCEL' : 'JTOOLBAR_CLOSE');
 		JToolBarHelper::divider();
 		JToolBarHelper::help('screen.language', true);
-	}
-
-	protected function prepareDocument() 
-	{
-		$document = JFactory::getDocument();
-		$document->setTitle(JText::sprintf('COM_LOCALISE_TITLE', JText::_('COM_LOCALISE_TITLE_LANGUAGE')));
 	}
 }

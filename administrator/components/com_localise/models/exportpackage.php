@@ -88,7 +88,7 @@ class LocaliseModelExportPackage extends JModelItem
 		$model = JModelLegacy::getInstance('Package', 'LocaliseModel');
 		$model->setState('package.id', $id);
 		$model->setState('package.name', $packageName);
-		$package = $model->getItem();
+		$package = $model->getItem();var_dump($package); //jexit();
 
 		// Check if the package is correct
 		if (count($package->getErrors())) 
@@ -160,6 +160,7 @@ class LocaliseModelExportPackage extends JModelItem
 		$files['package']['name'] = "packages/$packageName.xml";
 		$files['package']['data'] = JFile::read($path);
 		$files['package']['time'] = time();
+
 		$files['manifest'] = array();
 		$files['manifest']['name'] = $element . '.xml';
 		$files['manifest']['data'] = '<?xml version="1.0" encoding="UTF-8"?>

@@ -18,7 +18,9 @@ defined('_JEXEC') or die;
 class LocaliseViewTranslation extends JViewLegacy
 {
 	protected $state;
+
 	protected $item;
+
 	protected $form;
 
 	/**
@@ -45,9 +47,6 @@ class LocaliseViewTranslation extends JViewLegacy
 		// Set the toolbar
 		$this->addToolbar();
 
-		// Prepare the document
-		$this->prepareDocument();
-
 		// Display the view
 		parent::display($tpl);
 	}
@@ -67,7 +66,7 @@ class LocaliseViewTranslation extends JViewLegacy
 			$filename = $this->state->get('translation.tag') . '.' . $this->state->get('translation.filename') . '.ini';
 		}
 
-		JToolbarHelper::title(JText::sprintf('COM_LOCALISE_HEADER_MANAGER', JText::sprintf($this->item->exists ? 'COM_LOCALISE_HEADER_TRANSLATION_EDIT' : 'COM_LOCALISE_HEADER_TRANSLATION_NEW', $filename)), 'langmanager.png');
+		JToolbarHelper::title(JText::sprintf('COM_LOCALISE_HEADER_MANAGER', JText::sprintf($this->item->exists ? 'COM_LOCALISE_HEADER_TRANSLATION_EDIT' : 'COM_LOCALISE_HEADER_TRANSLATION_NEW', $filename)), 'comments-2 langmanager');
 
 		if (!$checkedOut) 
 		{
@@ -78,11 +77,5 @@ class LocaliseViewTranslation extends JViewLegacy
 		JToolbarHelper::cancel('translation.cancel');
 		JToolBarHelper::divider();
 		JToolBarHelper::help('screen.translation', true);
-	}
-
-	protected function prepareDocument() 
-	{
-		$document = JFactory::getDocument();
-		$document->setTitle(JText::sprintf('COM_LOCALISE_TITLE', JText::_('COM_LOCALISE_TITLE_TRANSLATION')));
 	}
 }

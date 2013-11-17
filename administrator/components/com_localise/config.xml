@@ -41,6 +41,7 @@
 		<field
 			name="reference"
 			type="referencelanguage"
+			required="true"
 			label="COM_LOCALISE_LABEL_REFERENCE_LANGUAGE"
 			description="COM_LOCALISE_LABEL_REFERENCE_LANGUAGE_DESC" />
 		<field
@@ -48,7 +49,10 @@
 			type="text"
 			size="4"
 			maxlength="4"
+			minlength="4"
 			class="ltr"
+			required="true"
+			pattern="[0-7]{4}"
 			default="0444"
 			label="COM_LOCALISE_LABEL_SAVE_PERMISSION"
 			description="COM_LOCALISE_LABEL_SAVE_PERMISSION_DESC" />

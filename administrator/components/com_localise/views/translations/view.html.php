@@ -12,14 +12,17 @@ defined('_JEXEC') or die;
 /**
  * Translations View class for the Localise component
  *
- * @package     Extensions.Components
- * @subpackage  Localise
+ * @package     Joomla.Administrator
+ * @subpackage  com_localise
  */
 class LocaliseViewTranslations extends JViewLegacy
 {
 	protected $items;
+
 	protected $pagination;
+
 	protected $form;
+
 	protected $state;
 
 	/**
@@ -49,17 +52,8 @@ class LocaliseViewTranslations extends JViewLegacy
 		$this->addToolbar();
 		$this->sidebar = JHtmlSidebar::render();
 
-		// Prepare the document
-		$this->prepareDocument();
-
 		// Display the view
 		parent::display($tpl);
-	}
-
-	protected function prepareDocument() 
-	{
-		$document = JFactory::getDocument();
-		$document->setTitle(JText::sprintf('COM_LOCALISE_TITLE', JText::_('COM_LOCALISE_TITLE_TRANSLATIONS')));
 	}
 
 	/**
@@ -71,7 +65,7 @@ class LocaliseViewTranslations extends JViewLegacy
 	{
 		$canDo = LocaliseHelper::getActions();
 
-		JToolbarHelper::title(JText::sprintf('COM_LOCALISE_HEADER_MANAGER', JText::_('COM_LOCALISE_HEADER_TRANSLATIONS')), 'langmanager.png');
+		JToolbarHelper::title(JText::sprintf('COM_LOCALISE_HEADER_MANAGER', JText::_('COM_LOCALISE_HEADER_TRANSLATIONS')), 'comments-2 langmanager');
 
 		if ($canDo->get('core.admin')) 
 		{

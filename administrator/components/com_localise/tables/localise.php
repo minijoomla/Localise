@@ -88,7 +88,7 @@ class LocaliseTableLocalise extends JTable
    *
    * @return  int
    */
-  protected function _getAssetParentId($table = null, $id = null) 
+  protected function _getAssetParentId(JTable $table = NULL, $id = NULL) 
   {
     // Initialise variables.
     $db = $this->getDbo();

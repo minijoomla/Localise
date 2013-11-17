@@ -28,7 +28,7 @@
 		<field
 			name="creationdate"
 			type="calendar"
-			default="now"
+			default="NOW"
 			label="COM_LOCALISE_LABEL_TRANSLATION_CREATIONDATE"
 			description="COM_LOCALISE_LABEL_TRANSLATION_CREATIONDATE_DESC" />
 		<field
@@ -60,6 +60,7 @@
 			name="complete"
 			type="checkbox"
 			value="1"
+			default="0"
 			label="COM_LOCALISE_LABEL_TRANSLATION_COMPLETE"
 			description="COM_LOCALISE_LABEL_TRANSLATION_COMPLETE_DESC" />
 		<field
@@ -103,13 +104,28 @@
 		name="source"
 		label="COM_LOCALISE_LABEL_TRANSLATION_SOURCE"
 		description="COM_LOCALISE_LABEL_TRANSLATION_SOURCE_DESC">
-		<field
+		<!--field
 			name="source"
 			type="ini"
+			class="span12"
 			linenumbers="true"
 			rows="40"
 			cols="80"
 			height="500"
+			filter="raw" / -->
+		<field
+			name="source"
+			type="editor"
+			editor="codemirror|none"
+			buttons="no"
+			label="COM_TEMPLATES_FIELD_SOURCE_LABEL"
+			description="COM_TEMPLATES_FIELD_SOURCE_DESC"
+			height="500px"
+			rows="40"
+			cols="80"
+			syntax="ini"
+			lineNumbers="1"
+			tabmode="default"
 			filter="raw" />
 	</fieldset>
 </form>
