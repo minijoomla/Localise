@@ -55,7 +55,7 @@ $ftpSets   = $this->formftp->getFieldsets();
 	<fieldset class="panelform">
 		<legend><?php echo JText::_($fieldSets['source']->label); ?></legend>
 		<?php if (isset($fieldSets['source']->description)):?>
-		<p class="tip"><?php echo JText::_($fieldSets['source']->description); ?></p>
+		<p class="label"><?php echo JText::_($fieldSets['source']->description); ?></p>
 		<?php endif;?>
 		<div class="clr"></div>
 		<div class="editor-border">

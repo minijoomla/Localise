@@ -1,178 +1,81 @@
-/* Simple parser for INI in media */
-var INIParser = Editor.Parser = (function() {
-  var tokenizeINI = (function() {
-    function normal(source, setState) {
-      var ch = source.next();
-      if (ch == ';') {
-        setState(inComment);
-        return null;
-      } else if (ch == '[') {
-        setState(inGroup);
-        return null;
-      } else if (/[A-Z_\.]/.test(ch)) {
-        setState(inIdentifier);
-        return null;
-      } else {
-        setState(inError);
-        return null;
-      }
-    }
+CodeMirror.defineMode("parseini", function() {
+	return {
+		token: function(stream, state) {
+			var sol = stream.sol() || state.afterSection;
+			var eol = stream.eol();
 
-    function inError(source,setState) {
-      while (!source.endOfLine()) {
-        var ch = source.next();
-      }
-      setState(normal);
-      return "ini-error";    
-    }
-  
-    function inComment(source, setState) {
-      while (!source.endOfLine()) {
-        var ch = source.next();
-      }
-      setState(normal);
-      return "ini-comment";
-    }
+			state.afterSection = false;
 
-    function inGroup(source, setState) {
-      while (!source.endOfLine()) {
-        var ch=source.next();
-        if (ch=="]")
-        {
-          setState(inEndGroup);
-          return "ini-group";
-        }
-      }
-      setState(normal);
-      return "ini-error";
-    }
+			if (sol) {
+				if (state.nextMultiline) {
+					state.inMultiline = true;
+					state.nextMultiline = false;
+				} else {
+					state.position = "identifier";
+				}
+			}
 
-    function inEndGroup(source, setState)
-    {
-      if (source.peek()==';')
-      {
-        setState(inComment);
-        return null;
-      }
-      setState(normal);
-      return null;
-    }
-  
-    function inIdentifier(source, setState) {
-      source.nextWhile(matcher(/[A-Z_\.\-0-9]/));
-      setState(inEqual);
-      return "ini-identifier";
-    }
+			if (eol && ! state.nextMultiline) {
+				state.inMultiline = false;
+				state.position = "identifier";
+			}
 
-    function inEqual(source, setState) {
-      var ch=source.next();
-      if (ch=='=') {
-        setState(inValue);
-        return "ini-equal";
-      }
-      setState(inError);
-      return null;
-    }
-  
-    function inValue(source, setState) {
-      if (source.equals("\"")) {
-        source.next();
-        setState(inString);
-        return null;
-      } else if (source.equals('_')) {
-        setState(inConstant);
-        return null;
-      } else {
-        setState(inError);
-        return null;
-      }
-    }
-  
-    function inRestValue(source, setState) {
-      var ch = source.next();
-      if (ch == ';') {
-        setState(inComment);
-        return null;
-      } else if (ch == "\"") {
-        setState(inString);
-        return null;
-      } else if (ch == '_') {
-        setState(inConstant);
-        return null;
-      } else {
-        setState(inError);
-        return null;
-      }
-    }
-  
-    function inConstant(source, setState) {
-      source.nextWhile(matcher(/[_\w\d]/));
-      var word = source.get();
-      if (word=='_QQ_') {
-        if (source.endOfLine()) {
-          setState(normal);
-        } else {
-          setState(inRestValue);
-        }
-        return {style: "ini-constant", content: word};
-      } else {
-        setState(normal);
-        return {style: "ini-error", content: word};
-      }
-    }
+			var ch = stream.next();
 
-    function inString(source, setState) {
-      while (!source.endOfLine()) {
-        var ch = source.next();
-        if (ch == "\"")
-          break;
-      }
-      if (source.endOfLine()) {
-        setState(normal);
-      } else {
-        setState(inRestValue);
-      }
-      return "ini-string";
-    }
+			if (sol && (ch === ";"))
+			{
+				state.position = "comment";
+				stream.skipToEnd();
+				return "comment";
+			}
+			else if (sol && ch === "[")
+			{
+				state.afterSection = true;
+				stream.skipTo("]"); stream.eat("]");
+				return "group";
+			}
+			else if (sol && /[A-Z_\.]/.test(ch) && state.position === 'identifier')
+			{
+				stream.eatWhile(/[A-Z_\.\-0-9]/);
+				state.position = "equal";
+				return "identifier";
+			}
+			else if (!sol && ch === "=" && state.position === "equal")
+			{
+				state.position = "string";
+				return "equal";
+			}
+			else if (ch === '"' && state.position === "string")
+			{
+				state.position = "string";
+				stream.skipTo('"'); stream.eat('"');
+				return 'string';
+			}
+			else if (ch === '_' && state.position === "string")
+			{
+				if(stream.match('QQ_'))
+				{
+					state.position = "string";
+					return 'constant';
+				}
+				return "error";
+			}
+			else
+			{
+				return "error";
+			}
+		},
 
-    return function(source, startState) {
-      return tokenizer(source, startState || normal);
-    };
-  })();
+		startState: function() {
+			return {
+				position : "identifier",       // Current position, "identifier", "string" or "comment"
+				nextMultiline : false,  // Is the next line multiline value
+				inMultiline : false,    // Is the current line a multiline value
+				afterSection : false    // Did we just open a section
+			};
+		}
 
-  function indentINI() {
-    return function(nextChars) {
-      return 0;
-    };
-  }
+	};
+});
 
-  // This is a very simplistic parser -- since CSS does not really
-  // nest, it works acceptably well, but some nicer colouroing could
-  // be provided with a more complicated parser.
-  function parseINI(source, basecolumn) {
-    basecolumn = 0;
-    var tokens = tokenizeINI(source);
-
-    var iter = {
-      next: function() {
-        var token = tokens.next(), style = token.style, content = token.content;
-
-        if (content == "\n") 
-          token.indentation = indentINI();
-
-        return token;
-      },
-
-      copy: function() {
-        var _tokenState = tokens.state;
-        return function(source) {
-          tokens = tokenizeINI(source, _tokenState);
-          return iter;
-        };
-      }
-    };
-    return iter;
-  }
-
-  return {make: parseINI};
-})();
+CodeMirror.defineMIME("text/parseini", "parseini");

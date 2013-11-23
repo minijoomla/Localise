@@ -423,7 +423,7 @@ class LocaliseModelTranslation extends JModelForm
 		{
 			$form->setFieldAttribute('license', 'readonly', 'true');
 		}
-		
+
 		return $form;
 	}
 

@@ -231,31 +231,25 @@ pre.code,
 .editbox p {
 	margin: 0;
 }
-span.ini-group {
+.cm-s-default span.cm-group {
 	color: #ff8000;
 }
-span.ini-identifier {
+.cm-s-default span.cm-identifier {
 	color: #00AA00;
 }
-span.ini-boolean {
-	color: #770088;
-}
-span.ini-number {
-	color: #770088;
-}
-span.ini-comment {
+.cm-s-default span.cm-comment {
 	color: #a0a0a0;
 }
-span.ini-string {
+.cm-s-default span.cm-string {
 	color: #AA2222;
 }
-span.ini-equal {
+.cm-s-default span.cm-equal {
 	color: #000000;
 }
-span.ini-constant {
+.cm-s-default span.cm-constant {
 	color: #0000AA;
 }
-span.ini-error {
+.cm-s-default span.cm-error {
 	color: #000000;
 	background-color: #FF0000;
 }
@@ -275,4 +269,10 @@ ul.adminformlist li {
 .CodeMirror-wrapping iframe {
 	border: 3px groove #CCCCCC !important;
 	height: 500px !important;
+}
+/* Codemirror */
+.cm-trailingspace {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUXCToH00Y1UgAAACFJREFUCNdjPMDBUc/AwNDAAAFMTAwMDA0OP34wQgX/AQBYgwYEx4f9lQAAAABJRU5ErkJggg==);
+	background-position: bottom left;
+	background-repeat: repeat-x;
 }
