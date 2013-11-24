@@ -38,6 +38,11 @@ CodeMirror.defineMode("parseini", function() {
 			{
 				stream.eatWhile(/[A-Z_\.\-0-9]/);
 				state.position = "equal";
+				blacklist = ["YES", "NO", "NULL", "FALSE", "ON", "OFF", "NONE", "TRUE"];
+				if(blacklist.indexOf(stream.current()) > -1)
+				{
+					return "error";
+				}
 				return "identifier";
 			}
 			else if (!sol && ch === "=" && state.position === "equal")
