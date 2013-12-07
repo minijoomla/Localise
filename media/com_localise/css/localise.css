@@ -266,9 +266,8 @@ ul.adminformlist li {
 	text-align: right;
 	padding-right:7%
 }
-.CodeMirror-wrapping iframe {
-	border: 3px groove #CCCCCC !important;
-	height: 500px !important;
+.CodeMirror {
+	direction: ltr;
 }
 /* Codemirror */
 .cm-trailingspace {

@@ -42,17 +42,14 @@ class JFormFieldIni extends JFormField
 	protected function getInput() 
 	{
 		JHtml::_('behavior.framework');
-		JHtml::_('script', $this->_basePath . 'js/codemirror.js', false, false, false, false);
-		
-		JHtml::_('script', $this->_basePath . 'js/fullscreen.js', false, false, false, false);
-		JHtml::_('script', $this->_basePath . 'js/closebrackets.js', false, false, false, false);
-		JHtml::_('script', 'media/com_localise/js/trailingspace.js', false, false, false, false);
-		JHtml::_('script', 'media/com_localise/js/active-line.js', false, false, false, false);
 
+		// Load Codemirror
+		JHtml::_('script', 'media/com_localise/codemirror/codemirror-compressed.js', false, false, false, false);
+		JHtml::_('stylesheet', 'media/com_localise/codemirror/codemirror.css');
+		JHtml::_('stylesheet', 'media/com_localise/codemirror/configuration.css');
+
+		// Load Joomla language ini parser
 		JHtml::_('script', 'media/com_localise/js/parseini.js', false, false, false, false);
-
-		JHtml::_('stylesheet', $this->_basePath . 'css/codemirror.css');
-		JHtml::_('stylesheet', $this->_basePath . 'css/configuration.css');
 		JHtml::_('stylesheet', 'media/com_localise/css/localise.css');
 
 		$rows   = (string) $this->element['rows'];
@@ -78,10 +75,10 @@ class JFormFieldIni extends JFormField
 		$html[] = '		var editor = CodeMirror.fromTextArea(document.getElementById("' . $this->id . '"), ' . json_encode($options) . ');';
 		$html[] = '		editor.setOption("extraKeys", {';
 		$html[] = '			"Ctrl-Q": function(cm) {';
-		$html[] = '				setFullScreen(cm, !isFullScreen(cm));';
+		$html[] = '				cm.setOption("fullScreen", !cm.getOption("fullScreen"));';
 		$html[] = '			},';
 		$html[] = '			"Esc": function(cm) {';
-		$html[] = '				if (isFullScreen(cm)) setFullScreen(cm, false);';
+		$html[] = '				if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);';
 		$html[] = '			}';
 		$html[] = '		});';
 		$html[] = '		editor.on("gutterClick", function(cm, n) {';
