@@ -28,10 +28,12 @@
 		</schemas>
 	</update>
 	<media destination="com_localise" folder="media/com_localise">
+		<folder>codemirror</folder>
 		<folder>css</folder>
 		<folder>images</folder>
 		<folder>js</folder>
 		<folder>packages</folder>
+		<filename>index.html</filename>
 	</media>
 	<administration>
 		<menu img="class:localise">COM_LOCALISE</menu>
